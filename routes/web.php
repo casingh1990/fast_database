@@ -24,9 +24,15 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-});
+})->name('index');
 
-Route::get('/visit/{visit_id}', [VisitController::class, 'edit'])->name('viewEditVisit');
+Route::prefix('/visit')->group(function () {
+    Route::get('/visits', [VisitController::class, 'visits'])->name('visits-api');
+    Route::get('/edit/{visit}', [VisitController::class, 'edit'])->name('viewEditVisit');
+    Route::get('/add', [VisitController::class, 'add'])->name('viewAddVisit');
+    Route::post('/submit-add', [VisitController::class, 'submitAdd'])->name('submitAddVisit');
+    Route::put('/{visit}/submit-edit', [VisitController::class, 'submitEdit'])->name('submitEditVisit');
+});
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

@@ -1,9 +1,10 @@
 <script setup>
 import { Head, Link } from '@inertiajs/inertia-vue3';
+import axios from 'axios';
 </script>
 
 <template>
-    <Head title="Welcome" />
+    <Head title="Visits" />
 
     <div
         class="relative flex items-top h-20 justify-center bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0"
@@ -28,34 +29,45 @@ import { Head, Link } from '@inertiajs/inertia-vue3';
             </template>
         </div>
     </div>
-    <div>
-        <div class="flex-1">
-            <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
-                <div class="">
-                    <div class="">
-                        <table class="table-fixed">
-                            <thead>
-                                <tr>
-                                    <th class="w-1/5 border border-slate-600">Name</th>
-                                    <th class="w-1/5 border border-slate-600">Date of Exam</th>
-                                    <th class="w-1/5 border border-slate-600">Hospital Number</th>
-                                    <th class="w-1/5 border border-slate-600">Details</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="visit in visits">
-                                    <td class="p-2 border border-slate-600">{{ visit.patient.name }}</td>
-                                    <td class="p-2 border border-slate-600">{{ visit.date_of_exam }}</td>
-                                    <td class="p-2 border border-slate-600">{{ visit.hospital_number }}</td>
-                                    <td class="p-2 border border-slate-600">
-                                        <Link :href="`/visit/${ visit.id }`">View / Edit</Link>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <br>
-                        <button type="button" @click="Add">Add</button>
-                    </div>
+    <div class="flex flex-col">
+        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                <div class="overflow-hidden">
+                    <table class="min-w-full">
+                        <thead class="border-b">
+                            <tr>
+                                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Name</th>
+                                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Date of Exam</th>
+                                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Hospital Number</th>
+                                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr :class="getClass(visit)" v-for="visit in visits">
+                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ visit.patient_name }}</td>
+                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ visit.date_of_exam }}</td>
+                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ visit.hospital_number }}</td>
+                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                    <Link
+                                        :href="`/visit/edit/${ visit.id }`"
+                                        class="inline-block px-6 py-2 border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
+                                    >
+                                        View / Edit
+                                    </Link>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <Link
+                        type="button"
+                        data-mdb-ripple="true"
+                        data-mdb-ripple-color="light"
+                        class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                        :href="`/visit/add`"
+                        >
+                        Add
+                    </Link>
                 </div>
             </div>
         </div>
@@ -73,62 +85,19 @@ export default {
     },
     data() {
         return {
-            visits: [
-                {
-                    id: 1,
-                    patient: {
-                        name: 'Amit Singh',
-                    },
-                    date_of_exam: '2023-01-17',
-                    hospital_number: '20',
-                },
-                {
-                    id: 1,
-                    patient: {
-                        name: 'Amit Singh Amit Singh',
-                    },
-                    date_of_exam: '2023-01-17',
-                    hospital_number: '20',
-                },
-                {
-                    patient: {
-                        name: 'Amit Singh',
-                    },
-                    date_of_exam: '2023-01-17',
-                    hospital_number: '20',
-                },
-                {
-                    patient: {
-                        name: 'Amit Singh',
-                    },
-                    date_of_exam: '2023-01-17',
-                    hospital_number: '20',
-                },
-                {
-                    patient: {
-                        name: 'Amit Singh',
-                    },
-                    date_of_exam: '2023-01-17',
-                    hospital_number: '20',
-                },
-                {
-                    patient: {
-                        name: 'Amit Singh',
-                    },
-                    date_of_exam: '2023-01-17',
-                    hospital_number: '20',
-                },
-                {
-                    patient: {
-                        name: 'Amit Singh',
-                    },
-                    date_of_exam: '2023-01-17',
-                    hospital_number: '20',
-                }
-            ]
+            visits: []
         }
     },
+    mounted() {
+        axios.get('/visit/visits').then((response) => {
+            this.visits = response.data;
+        });
+    },
     methods: {
+        getClass(visit) {
+            console.log('border-b ' + ((visit.id%2)?'bg-gray-100':'bg-white'));
+            return 'border-b ' + ((visit.id%2)?'bg-gray-100':'bg-white');
+        },
         editModal(visit) {
             window.location='/visit/' . visit.id
         }

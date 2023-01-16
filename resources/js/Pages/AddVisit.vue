@@ -1,30 +1,22 @@
 <script setup>
 import { Head, Link } from '@inertiajs/inertia-vue3';
+import axios from 'axios';
 </script>
 
 <template>
-    <Head title="Edit Visit" />
 
-    <div
-        class="relative flex items-top h-20 justify-center bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0"
-    >
+    <Head title="Add Visit Log" />
+
+    <div class="relative flex items-top h-20 justify-center bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
         <div v-if="canLogin" class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-            <Link
-                v-if="$page.props.auth.user"
-                :href="route('dashboard')"
-                class="text-sm text-gray-700 dark:text-gray-500 underline"
-                >Dashboard</Link
-            >
+            <Link v-if="$page.props.auth.user" :href="route('dashboard')"
+                class="text-sm text-gray-700 dark:text-gray-500 underline">Dashboard</Link>
 
             <template v-else>
                 <Link :href="route('login')" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</Link>
 
-                <Link
-                    v-if="canRegister"
-                    :href="route('register')"
-                    class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline"
-                    >Register</Link
-                >
+                <Link v-if="canRegister" :href="route('register')"
+                    class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</Link>
             </template>
         </div>
     </div>
@@ -46,7 +38,7 @@ import { Head, Link } from '@inertiajs/inertia-vue3';
                                     <label for="full_name">Patient Full Name</label>
                                     <input type="text" name="full_name" id="full_name"
                                         class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                                        v-model="visit.patient_name" />
+                                        v-model="visit.patient" />
                                 </div>
 
                                 <div class="md:col-span-3">
@@ -167,22 +159,23 @@ import { Head, Link } from '@inertiajs/inertia-vue3';
 
 <script>
 export default {
-    props: {
-        PropVisit: {
-            type: Object,
-        },
-    },
     data() {
         return {
-            visit: {},
+            visit: {
+                id: null,
+                patient: 'test',
+                date_of_exam: '9/9/2022',
+                hospital_number: '123',
+                fast: 'negative',
+                correlation: '1',
+                patient_conselled: '0',
+                selection: [],
+            }
         }
-    },
-    mounted() {
-        this.visit = this.PropVisit;
     },
     methods: {
         submit() {
-            axios.put(`/visit/${this.visit.id}/submit-edit`, this.visit).then((response) => {
+            axios.post('/visit/submit-add', this.visit).then((response) => {
                 window.location = '/';
             })
         }
