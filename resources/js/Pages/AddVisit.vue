@@ -90,12 +90,12 @@ import axios from 'axios';
                                 </div>
                                 <div class="md:col-span-2" v-if="visit.fast === 'positive'">
                                     <div class="flex items-center pl-4 border border-gray-200 rounded dark:border-gray-700">
-                                        <input checked id="bordered-checkbox-2" type="checkbox" value="left upper quadrant" name="bordered-checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" v-model="visit.selection">
-                                        <label for="bordered-checkbox-2" class="w-full py-4 ml-2 text-sm font-medium text-gray-900">Left Upper Quadrant</label>
+                                        <input checked id="bordered-checkbox-3" type="checkbox" value="left upper quadrant" name="bordered-checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" v-model="visit.selection">
+                                        <label for="bordered-checkbox-3" class="w-full py-4 ml-2 text-sm font-medium text-gray-900">Left Upper Quadrant</label>
                                     </div>
                                     <div class="flex items-center pl-4 border border-gray-200 rounded dark:border-gray-700">
-                                        <input checked id="bordered-checkbox-2" type="checkbox" value="pelvis" name="bordered-checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" v-model="visit.selection">
-                                        <label for="bordered-checkbox-2" class="w-full py-4 ml-2 text-sm font-medium text-gray-900">Pelvis</label>
+                                        <input checked id="bordered-checkbox-4" type="checkbox" value="pelvis" name="bordered-checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" v-model="visit.selection">
+                                        <label for="bordered-checkbox-4" class="w-full py-4 ml-2 text-sm font-medium text-gray-900">Pelvis</label>
                                     </div>
                                 </div>
                                 <div class="md:col-span-1"></div>
