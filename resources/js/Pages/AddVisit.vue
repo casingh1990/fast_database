@@ -163,12 +163,12 @@ export default {
         return {
             visit: {
                 id: null,
-                patient: 'test',
-                date_of_exam: '9/9/2022',
-                hospital_number: '123',
-                fast: 'negative',
-                correlation: '1',
-                patient_conselled: '0',
+                patient: '',
+                date_of_exam: '',
+                hospital_number: '',
+                fast: '',
+                correlation: '',
+                patient_conselled: '',
                 selection: [],
             }
         }
